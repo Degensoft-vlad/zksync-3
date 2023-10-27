@@ -83,8 +83,7 @@ def get_wallets():
     return wallets
 
 
-async def run_module(module, account_id, key, proxy, sleep_time):
-    #await asyncio.sleep(sleep_time)
+async def run_module(module, account_id, key, proxy):
     await module(account_id, key, proxy)
 
 
@@ -94,12 +93,9 @@ async def main(module):
     if RANDOM_WALLET:
         random.shuffle(wallets)
 
-    sleep_time = random.randint(SLEEP_FROM, SLEEP_TO)
-
     for _, account in enumerate(wallets, start=1):
-        await run_module(module, account["id"], account["key"], account["proxy"], sleep_time)
-
-        sleep_time += random.randint(SLEEP_FROM, SLEEP_TO)
+        sleep_time = random.randint(SLEEP_FROM, SLEEP_TO)
+        await run_module(module, account["id"], account["key"], account["proxy"])
 
         if USE_MOBILE_PROXY and CHANGE_PROXY_URL:
             resp = requests.get(CHANGE_PROXY_URL)
@@ -107,7 +103,9 @@ async def main(module):
             if resp.status_code != 200:
                 raise Exception(f'status_code = {resp.status_code}, response = {resp.text}')
 
-            await asyncio.sleep(10)
+        print(f'Delay before next wallet is {sleep_time}')
+        await asyncio.sleep(sleep_time)
+
     print("Finished!")
 
 
