@@ -25,7 +25,6 @@ class ZKSDomain(Account):
         return tx
 
     async def get_random_name(self):
-        logger.info(f"Ip address for 'Get zks domain' is {self.ip}")
         domain_name = "".join(random.sample([chr(i) for i in range(97, 123)], random.randint(7, 15)))
 
         logger.info(f"[{self.account_id}][{self.address}] Mint {domain_name}.zks domain")

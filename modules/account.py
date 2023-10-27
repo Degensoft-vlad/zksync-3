@@ -52,10 +52,13 @@ class Account:
                 'http': p,
                 'https': p
             }
-
-        res = requests.get(url='https://api.ipify.org/', proxies=proxy)
-        ip = res.text
-        return ip
+        try:
+            res = requests.get(url='https://api.ipify.org/', proxies=proxy)
+            ip = res.text
+            return ip
+        except Exception as e:
+            print(f'Can not get ip')
+            raise(e)
 
     def get_contract(self, contract_address: str, abi=None):
         contract_address = Web3.to_checksum_address(contract_address)

@@ -26,7 +26,6 @@ class Tavaera(Account):
         return tx
 
     async def mint_id(self):
-        logger.info(f"Ip address for 'Mint Tavaera ID' is {self.ip}")
         logger.info(f"[{self.account_id}][{self.address}] Mint Tavaera ID")
 
         contract = self.get_contract(TAVAERA_ID_CONTRACT, TAVAERA_ID_ABI)
@@ -43,7 +42,6 @@ class Tavaera(Account):
         await self.wait_until_tx_finished(txn_hash.hex())
 
     async def mint_nft(self):
-        logger.info(f"Ip address for 'Mint Tavaera NFT' is {self.ip}")
         logger.info(f"[{self.account_id}][{self.address}] Mint Tavaera NFT")
 
         contract = self.get_contract(TAVAERA_CONTRACT, TAVAERA_ABI)
@@ -63,6 +61,7 @@ class Tavaera(Account):
     @retry
     @check_gas
     async def mint(self, sleep_from: int, sleep_to: int):
+        logger.info(f"Ip address for 'Mint Tavaera' is {self.ip}")
         await self.mint_id()
 
         await sleep(sleep_from, sleep_to)

@@ -27,7 +27,6 @@ class ZKSwap(Account):
         return tx
 
     async def get_min_amount_out(self, from_token: str, to_token: str, amount: int, slippage: float):
-        logger.info(f"Ip address for 'Get min amount out' is {self.ip}")
         min_amount_out = await self.swap_contract.functions.getAmountsOut(
             amount,
             [
@@ -38,7 +37,6 @@ class ZKSwap(Account):
         return int(min_amount_out[1] - (min_amount_out[1] / 100 * slippage))
 
     async def swap_to_token(self, from_token: str, to_token: str, amount: int, slippage: int):
-        logger.info(f"Ip address for 'Swap to token' is {self.ip}")
         tx_data = await self.get_tx_data()
         tx_data.update({"value": amount})
 
@@ -57,7 +55,6 @@ class ZKSwap(Account):
         return contract_txn
 
     async def swap_to_eth(self, from_token: str, to_token: str, amount: int, slippage: int):
-        logger.info(f"Ip address for 'Swap to ETH' is {self.ip}")
         token_address = Web3.to_checksum_address(ZKSYNC_TOKENS[from_token])
 
         await self.approve(amount, token_address, ZKSWAP_CONTRACTS["router"])

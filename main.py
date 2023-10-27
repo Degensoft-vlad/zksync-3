@@ -103,10 +103,11 @@ async def main(module):
             if resp.status_code != 200:
                 raise Exception(f'status_code = {resp.status_code}, response = {resp.text}')
 
-        print(f'Delay before next wallet is {sleep_time}')
-        await asyncio.sleep(sleep_time)
+        if _ < len(wallets):
+            logger.success(f'Delay before next wallet is {sleep_time}')
+            await asyncio.sleep(sleep_time)
 
-    print("Finished!")
+    logger.success('Finished')
 
 
 if __name__ == '__main__':

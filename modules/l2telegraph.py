@@ -36,7 +36,6 @@ class L2Telegraph(Account):
         return int(fee[0] * 1.2)
 
     async def get_nft_id(self, txn_hash: str):
-        logger.info(f"Ip address for 'Get NFT id' is {self.ip}")
         receipts = await self.w3.eth.get_transaction_receipt(txn_hash)
 
         nft_id = int(receipts["logs"][2]["topics"][-1].hex(), 0)
@@ -69,7 +68,6 @@ class L2Telegraph(Account):
         await self.wait_until_tx_finished(txn_hash.hex())
 
     async def mint(self):
-        logger.info(f"Ip address for 'Mint NFT' is {self.ip}")
         logger.info(f"[{self.account_id}][{self.address}] Mint NFT")
 
         tx_data = await self.get_tx_data()
